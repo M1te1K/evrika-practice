@@ -8,8 +8,8 @@
 void missing_delete() {
     int* arr = new int[100];
     arr[0] = 42;
-    std::cout << "missing_delete: allocated int[100], never freed\n";
-    // no delete[] arr;
+    
+    delete[] arr;
 }
 
 // Leak category 2: pointer reassignment loses the original allocation
