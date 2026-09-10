@@ -27,16 +27,18 @@ void threadingExample() {
     t.join();
 
     std::cout << "stackVar after thread execution: " << stackVar << std::endl;  // Expecting 42
-}`
+}
 
 // Example 2: Dangling Pointer
 void danglingPointerExample() {
     std::cout << "\n--- Dangling Pointer Example ---\n";
     
     int* ptr = new int(10);  // Allocate memory for an integer and initialize it
-    delete ptr;  // Deallocate the memory
+    
     // Accessing the memory after deallocation (Dangling pointer)
     std::cout << *ptr << std::endl; // This is undefined behavior
+    delete ptr;  // Deallocate the memory
+
 }
 
 // Example 3: Double Free
@@ -46,7 +48,7 @@ void doubleFreeExample() {
     int* ptr2 = new int(10);  // Allocate memory
     std::cout << *ptr2 << std::endl;  // Output: 10
     delete ptr2;  // First deallocation
-    delete ptr2;  // Second deallocation (double free)
+    
 }
 
 // Example 4: Improper Use of 'memcpy' (Buffer Overflow)
@@ -54,7 +56,7 @@ void improperMemcpyExample() {
     std::cout << "\n--- Improper Use of 'memcpy' Example (Buffer Overflow) ---\n";
     
     char buffer1[10] = "123456789";  // 9 characters plus null terminator
-    char buffer2[5];  // Only 5 characters can fit in buffer2
+    char buffer2[10];  // Only 5 characters can fit in buffer2
 
     std::cout << "Before memcpy:" << std::endl;
     std::cout << "buffer1: " << buffer1 << std::endl;
@@ -75,6 +77,7 @@ void memoryLeakExample() {
     int* ptr3 = new int(10);  // Dynamically allocating memory
     std::cout << "Value: " << *ptr3 << std::endl;  // Doing some operations (e.g., printing the value)
     // Memory leak: No 'delete' statement to free allocated memory
+    delete ptr3;
 }
 
 // Example 6: Mismatched Allocation/Deallocation
@@ -95,7 +98,7 @@ void mismatchedAllocationDeallocationExample() {
     std::cout << std::endl;
 
     // Vulnerable delete - mismatched allocation/deallocation
-    delete array;  // ERROR: Should use delete[] instead of delete
+    delete[] array;  // ERROR: Should use delete[] instead of delete
 }
 
 // --- Race Condition ---
